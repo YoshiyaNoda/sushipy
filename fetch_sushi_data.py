@@ -5,12 +5,14 @@ import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
 
 # URLの指定
-html = urlopen("https://www.oreilly.co.jp/ebook/")
+html = urlopen("https://e-akane.com/blog/post-18198/")
 bsObj = BeautifulSoup(html, "html.parser")
 
 # テーブルを指定
-table = bsObj.findAll("table", {"class":"tablesorter"})[0]
-rows = table.findAll("tr")
+tables = bsObj.findAll("table", {"class":""})
+rows = []
+for table in tables:
+    rows += table.findAll("tr")
 
 with open("data.csv", "w", encoding='utf-8') as file:
     writer = csv.writer(file)
