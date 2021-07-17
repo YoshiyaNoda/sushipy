@@ -97,5 +97,5 @@ except:
     print('終了です')
 else:
     print('終了できませんでした')
-# finally:
-    # driver.close()
+finally:
+    driver.close()
