@@ -42,9 +42,9 @@ def ocr():
     size = element.size
     png = driver.get_screenshot_as_png()
     im = Image.open(BytesIO(png)) # uses PIL library to open image in memory
-    left = location['x'] + 300
+    left = location['x'] + 310
     top = location['y'] + size['height'] + 165
-    right = (location['x'] + size['width']) * 2 - 150
+    right = (location['x'] + size['width']) * 2 - 170
     bottom = location['y'] + size['height'] * 2 - 200
     # print([left, top, right, bottom])
 
@@ -74,16 +74,20 @@ def sim(rt):
             text = d
     return text
 
-@timeout_decorator.timeout(1000)
+@timeout_decorator.timeout(10000)
 def mainloop():
     before = ''
+    counter = 0
     while True:
         read_text = ocr()
         text = read_text
-        print(text + " sim " + read_text)
-        # actions.send_keys(text).perform()
+        print(text)
+        # actions.send_keys(text).perform() #これうまくいかないのなんでだろ textそのまま入力したのがダメなのかな
         pa.typewrite(text, interval = 0.0)
-        time.sleep(0.2)
+        time.sleep(0.05)
+        counter += 1
+        if counter > 206:
+            break
         
 
 
@@ -93,5 +97,5 @@ except:
     print('終了です')
 else:
     print('終了できませんでした')
-finally:
-    driver.close()
+# finally:
+    # driver.close()
